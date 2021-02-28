@@ -3,6 +3,10 @@ pipeline {
     triggers {
         GenericTrigger(causeString: 'Relay Push Service',  token: 'Thread.Build')
     }
+    options {
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '1')
+    }
+
     stages {
 
         stage('Update Submodules') {
