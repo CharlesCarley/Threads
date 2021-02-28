@@ -24,18 +24,20 @@ set(TestTarget_SOURCE
     Test1.cpp
 )
 
-include_directories(. googletest)
+include_directories(. googletest  
+                      ${Threads_INCLUDE} 
+                      ${Utils_INCLUDE})
 
 add_executable(
     ${TestTargetName}
     ${TestTarget_SOURCE}
 )
-target_link_libraries(${TestTargetName} gtest_main)
+
+target_link_libraries(${TestTargetName} gtest_main ${Threads_LIBRARY} ${Utils_LIBRARY})
 
 if (TargetFolders)
     set_target_properties(${TargetName} PROPERTIES FOLDER "${TargetGroup}")
 endif()
-
 
 if (Threads_AUTO_RUN_TEST)
 
