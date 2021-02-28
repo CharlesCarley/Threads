@@ -22,5 +22,5 @@ include(StaticRuntime)
 set_static_runtime()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-option(Template_BUILD_TEST     "Build the unit test program." ON)
-option(Template_AUTO_RUN_TEST  "Automatically run the test program." OFF)
+option(Threads_BUILD_TEST     "Build the unit test program." ON)
+option(Threads_AUTO_RUN_TEST  "Automatically run the test program." OFF)
