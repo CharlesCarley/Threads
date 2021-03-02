@@ -22,6 +22,7 @@ set(Threads_SRC
     skMutex.cpp
     skProcessQueue.cpp
     skSemaphore.cpp
+    skTimedCallback.cpp
     skThread.cpp
     skThreadUtils.cpp
 )
@@ -31,6 +32,7 @@ set(Threads_HDR
     skMutex.h
     skProcessQueue.h
     skSemaphore.h
+    skTimedCallback.h
     skThread.h
     skThreadUtils.h
 )
