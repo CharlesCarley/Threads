@@ -23,7 +23,7 @@
 #include "Utils/skMinMax.h"
 
 skTimedCallback::skTimedCallback(skTimedCallback::Listener* listener,
-                                 const SKint32&             interrupt) :
+                                 const SKulong&             interrupt) :
     m_interrupt(interrupt),
     m_listener(listener),
     m_running(false)
@@ -45,7 +45,7 @@ void skTimedCallback::begin()
     }
 }
 
-void skTimedCallback::setInterval(const SKint32& interrupt)
+void skTimedCallback::setInterval(const SKulong& interrupt)
 {
     SK_SCOPE_LOCK_CRITICAL_SECTION(&m_criticalSection);
     m_interrupt = skMax<SKint32>(interrupt, 1);
@@ -56,9 +56,7 @@ void skTimedCallback::end()
     {
         SK_SCOPE_LOCK_CRITICAL_SECTION(&m_criticalSection);
         if (m_running)
-        {
             m_running = false;
-        }
     }
     skRunable::joinImpl();
 }
@@ -75,7 +73,8 @@ int skTimedCallback::update()
         {
             if (!m_running)
                 break;
-            wait(1); // millisecond
+
+            wait(1);
         } while (m_timer.getMicroseconds() - tick < m_interrupt);
 
         m_listener->tickEnd();

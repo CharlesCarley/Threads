@@ -46,7 +46,7 @@ public:
 private:
     skCriticalSection m_criticalSection;
 
-    SKint32   m_interrupt;
+    SKulong   m_interrupt;
     Listener* m_listener;
     bool      m_running;
     skTimer   m_timer;
@@ -54,10 +54,10 @@ private:
     int update() override;
 
 public:
-    skTimedCallback(Listener* listener, const SKint32& interrupt);
+    skTimedCallback(Listener* listener, const SKulong& interrupt);
     ~skTimedCallback() override;
 
-    void setInterval(const SKint32& interrupt);
+    void setInterval(const SKulong& interrupt);
 
     void begin();
     void end();
