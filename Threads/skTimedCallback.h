@@ -33,7 +33,8 @@ public:
     class Listener
     {
     public:
-        virtual void tick() = 0;
+        virtual void tickStart(){};
+        virtual void tickEnd(){};
     };
 
 private:

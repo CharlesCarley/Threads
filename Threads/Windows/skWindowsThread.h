@@ -29,8 +29,7 @@ class skWindowsThread
 {
 private:
     SKthreadObject m_thread;
-    skMutex        m_mutex;
-    SKsize         m_id;
+    SKsize         m_id;  // unused at the moment
 
 protected:
     skWindowsThread();
@@ -46,6 +45,7 @@ protected:
     void joinImpl(void);
 
 public:
+
     virtual int update()
     {
         joinImpl();

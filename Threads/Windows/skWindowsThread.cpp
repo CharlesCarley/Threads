@@ -52,9 +52,6 @@ void skWindowsThread::startImpl(void)
     if (m_thread != SK_THREAD_NULL)
         joinImpl();
 
-    // Creates a thread to execute within the virtual address space
-    // of the calling process.
-
     m_thread = (SKuintPtr)::CreateThread(
         nullptr,                     // No inheritance
         0,                           // Use the default stack size
@@ -75,7 +72,6 @@ void skWindowsThread::waitImpl(SKsize ms)
 {
     if (m_thread != SK_THREAD_NULL)
         ::WaitForSingleObject((HANDLE)m_thread, (DWORD)ms);
-
 }
 
 void skWindowsThread::joinImpl()
@@ -85,7 +81,7 @@ void skWindowsThread::joinImpl()
         waitImpl(INFINITE);
 
         if (CloseHandle((HANDLE)m_thread) == FALSE)
-            printf("Filed to close the thread handle : %d\n", GetLastError());
+            tracef("Failed to close the thread handle : %d\n", GetLastError());
 
         m_id = m_thread = SK_NPOS;
     }
