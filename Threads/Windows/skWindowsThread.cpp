@@ -76,13 +76,14 @@ void skWindowsThread::waitImpl(SKsize ms)
 
 void skWindowsThread::joinImpl()
 {
-    if (m_thread)
+    if (m_thread != SK_THREAD_NULL)
     {
         waitImpl(INFINITE);
 
         if (CloseHandle((HANDLE)m_thread) == FALSE)
             tracef("Failed to close the thread handle : %d\n", GetLastError());
 
-        m_id = m_thread = SK_NPOS;
+        m_id = SK_NPOS;
+        m_thread = SK_THREAD_NULL;
     }
 }

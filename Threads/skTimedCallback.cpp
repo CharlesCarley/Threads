@@ -53,29 +53,32 @@ void skTimedCallback::setInterval(const SKint32& interrupt)
 
 void skTimedCallback::end()
 {
-    m_criticalSection.lock();
-    m_running = false;
-    m_interrupt = 0;
-    m_criticalSection.unlock();
-
+    {
+        SK_SCOPE_LOCK_CRITICAL_SECTION(&m_criticalSection);
+        if (m_running)
+        {
+            m_running = false;
+        }
+    }
     skRunable::joinImpl();
 }
 
 int skTimedCallback::update()
 {
+    m_timer.reset();
     while (m_running)
     {
-        m_criticalSection.lock();
+        SKulong tick = m_timer.getMicroseconds();
+
         m_listener->tickStart();
-        m_criticalSection.unlock();
+        do
+        {
+            if (!m_running)
+                break;
+            wait(1); // millisecond
+        } while (m_timer.getMicroseconds() - tick < m_interrupt);
 
-        wait(m_interrupt);
-
-
-        m_criticalSection.lock();
         m_listener->tickEnd();
-        m_criticalSection.unlock();
     }
-
     return 0;
 }

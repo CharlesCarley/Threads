@@ -26,6 +26,7 @@
 #include "Threads/skSemaphore.h"
 #include "Threads/skThread.h"
 #include "Threads/skThreadUtils.h"
+#include "Utils/skTimer.h"
 
 class skTimedCallback final : public skRunable
 {
@@ -33,15 +34,22 @@ public:
     class Listener
     {
     public:
-        virtual void tickStart(){};
-        virtual void tickEnd(){};
+        virtual void tickStart()
+        {
+        }
+
+        virtual void tickEnd()
+        {
+        }
     };
 
 private:
     skCriticalSection m_criticalSection;
-    SKint32           m_interrupt; 
-    Listener*         m_listener;
-    bool              m_running;
+
+    SKint32   m_interrupt;
+    Listener* m_listener;
+    bool      m_running;
+    skTimer   m_timer;
 
     int update() override;
 
