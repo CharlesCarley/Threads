@@ -36,25 +36,20 @@ private:
     skString m_buffer;
 
 public:
-    GlobalOutputManager()
-    {
-    }
-
-    ~GlobalOutputManager()
-    {
-    }
+    GlobalOutputManager()  = default;
+    ~GlobalOutputManager() override = default;
 
     void log(const skString& message)
     {
         m_buffer.append(message);
     }
 
-    void expectEq(const skString& value)
+    void expectEq(const skString& value) const
     {
         EXPECT_TRUE(m_buffer.equals(value));
     }
 
-    void expectVaryingOutput(int atLeastN_Variations)
+    void expectVaryingOutput(int atLeastN_Variations) const
     {
         // this test will pass if the lines alternate
         // to some extent. Its an unpredictable timing issue
@@ -90,7 +85,7 @@ public:
 
 SK_IMPLEMENT_SINGLETON(GlobalOutputManager)
 
-class TestThread : public skRunable
+class TestThread : public skRunnable
 {
 private:
     skString m_name;
@@ -113,14 +108,14 @@ GTEST_TEST(Thread1, Test1)
     TestThread a("Thread A"), b("Thread B");
 
     printf("--[-------------------------------------]--\n");
-    printf("Starting A (%p)\n", &a);
+    printf("Starting A (%p)\n", (void*)&a);
     a.start();
-    printf("Starting B (%p)\n", &b);
+    printf("Starting B (%p)\n", (void*)&b);
     b.start();
 
-    printf("Stopping A (%p)\n", &a);
+    printf("Stopping A (%p)\n", (void*)&a);
     a.join();
-    printf("Stopping B (%p)\n", &b);
+    printf("Stopping B (%p)\n", (void*)&b);
     b.join();
 
     printf("--[-------------------------------------]--\n");
@@ -129,7 +124,7 @@ GTEST_TEST(Thread1, Test1)
 
 static skCriticalSection gsCritical;
 
-class TestThreadSwitch : public skRunable
+class TestThreadSwitch : public skRunnable
 {
 private:
     skString m_name;
@@ -167,12 +162,12 @@ public:
 
 GTEST_TEST(Thread1, Test2)
 {
-    GlobalOutputManager output;
+    const GlobalOutputManager output;
 
     TestThreadSwitch a("A", CS_RED), b("B", CS_DARKMAGENTA);
     printf("--[-------------------------------------]--\n");
-    printf("Starting A (%p)\n", &a);
-    printf("Starting B (%p)\n", &b);
+    printf("Starting A (%p)\n", (void*)&a);
+    printf("Starting B (%p)\n", (void*)&b);
 
 
     a.start();
@@ -182,7 +177,7 @@ GTEST_TEST(Thread1, Test2)
 
     printf("--[-------------------------------------]--\n");
 
-    output.expectVaryingOutput(5);
+    output.expectVaryingOutput(3);
     EXPECT_TRUE(true);
 }
 
