@@ -34,3 +34,5 @@ set(Utils_TargetGroup    Extern)
 set(Utils_INCLUDE        ${Threads_SOURCE_DIR}/Extern)
 set(Utils_LIBRARY        ${Utils_TargetName})
 
+set(GTEST_INCLUDE ${Threads_SOURCE_DIR}/Test/googletest/googletest/include)
+set(GTEST_LIBRARY gtest_main)
