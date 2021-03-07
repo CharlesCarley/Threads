@@ -22,7 +22,6 @@
 #ifndef _skWindowsSemaphore_h__
 #define _skWindowsSemaphore_h__
 
-#include "Threads/skThread.h"
 #include "Threads/skThreadUtils.h"
 
 class skWindowsSemaphore
@@ -32,15 +31,15 @@ private:
 
     void initialize();
 
-    void finalize();
+    void finalize() const;
 
 protected:
     skWindowsSemaphore();
     virtual ~skWindowsSemaphore();
 
-    void waitImpl();
+    void waitImpl() const;
 
-    void signalImpl();
+    void signalImpl() const;
 };
 
 #endif  //_skWindowsSemaphore_h__

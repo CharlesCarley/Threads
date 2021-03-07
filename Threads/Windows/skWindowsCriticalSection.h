@@ -23,7 +23,6 @@
 #define _skWindowsCriticalSection_h_
 
 #include <Windows.h>
-#include "Threads/skThreadUtils.h"
 
 class skWindowsCriticalSection
 {
@@ -34,8 +33,8 @@ protected:
     skWindowsCriticalSection();
     virtual ~skWindowsCriticalSection();
 
-    void lockImpl(void);
-    void unlockImpl(void);
+    void lockImpl();
+    void unlockImpl();
 };
 
 #endif  //_skMutex_h_

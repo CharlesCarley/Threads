@@ -37,36 +37,32 @@
 class skMutex : public skPlatformMutex
 {
 public:
-    skMutex()
-    {
-    }
+    skMutex() = default;
 
-    ~skMutex() override
-    {
-    }
+    ~skMutex() override = default;
 
-    void lock(void)
+    void lock()
     {
         lockImpl();
     }
 
-    void unlock(void)
+    void unlock()
     {
         unlockImpl();
     }
 
-    void wait(void)
+    void wait()
     {
         waitImpl();
     }
 
-    void wait(SKsize milliseconds)
+    void wait(const SKsize milliseconds)
     {
         waitImpl(milliseconds);
     }
 
 
-    void notify(void)
+    void notify()
     {
         notifyImpl();
     }

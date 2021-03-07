@@ -38,7 +38,7 @@ class skThread : public skPlatformThread
 {
 public:
     skThread();
-    virtual ~skThread();
+    ~skThread() override;
 
 
     void wait()
@@ -62,7 +62,7 @@ public:
     }
 
 
-    virtual int update() override
+    int update() override
     {
         // rejoin the thread if not overridden
         joinImpl();
@@ -70,6 +70,6 @@ public:
     }
 };
 
-using skRunable = skThread;
+using skRunnable = skThread;
 
 #endif  //_skThread_h_

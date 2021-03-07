@@ -32,7 +32,7 @@ class skPacket
 {
 private:
     SKuint32 m_id;
-    skPacket(const skPacket& pak);
+    skPacket(const skPacket& pak) = delete;
 
 public:
     skPacket() :
@@ -48,7 +48,7 @@ public:
     virtual ~skPacket() = default;
 
 
-    int getId()
+    int getId() const
     {
         return m_id;
     }
@@ -85,6 +85,7 @@ public:
     void enqueue(skPacket* packet);
 
     void start();
+
     void stop();
 };
 

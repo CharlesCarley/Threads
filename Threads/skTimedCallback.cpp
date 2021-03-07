@@ -22,8 +22,8 @@
 #include "Threads/skTimedCallback.h"
 #include "Utils/skMinMax.h"
 
-skTimedCallback::skTimedCallback(skTimedCallback::Listener* listener,
-                                 const SKulong&             interrupt) :
+skTimedCallback::skTimedCallback(Listener*      listener,
+                                 const SKulong& interrupt) :
     m_interrupt(interrupt),
     m_listener(listener),
     m_running(false)
@@ -41,7 +41,7 @@ void skTimedCallback::begin()
     if (!m_running)
     {
         m_running = true;
-        skRunable::startImpl();
+        skRunnable::startImpl();
     }
 }
 
@@ -58,7 +58,7 @@ void skTimedCallback::end()
         if (m_running)
             m_running = false;
     }
-    skRunable::joinImpl();
+    joinImpl();
 }
 
 int skTimedCallback::update()
@@ -66,7 +66,7 @@ int skTimedCallback::update()
     m_timer.reset();
     while (m_running)
     {
-        SKulong tick = m_timer.getMicroseconds();
+        const SKulong tick = m_timer.getMicroseconds();
 
         m_listener->tickStart();
         do

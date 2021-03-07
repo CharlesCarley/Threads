@@ -25,7 +25,6 @@
 #include "Threads/skThread.h"
 #include "Threads/skThreadUtils.h"
 
-
 #if SK_PLATFORM == SK_PLATFORM_WIN32
 #include "Threads/Windows/skWindowsSemaphore.h"
 #define skPlatformSemaphore skWindowsSemaphore
@@ -34,19 +33,14 @@
 #define skPlatformSemaphore skPosixSemaphore
 #endif
 
-
-
-class skSemaphore : public skPlatformSemaphore
+class skSemaphore final : public skPlatformSemaphore
 {
 public:
     skSemaphore()
     {
     }
 
-    virtual ~skSemaphore()
-    {
-    }
-
+    ~skSemaphore() override = default;
 
     void wait()
     {

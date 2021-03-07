@@ -23,17 +23,18 @@
 #define _skTimedCallback_h_
 
 #include "Threads/skCriticalSection.h"
-#include "Threads/skSemaphore.h"
 #include "Threads/skThread.h"
-#include "Threads/skThreadUtils.h"
 #include "Utils/skTimer.h"
 
-class skTimedCallback final : public skRunable
+class skTimedCallback final : public skRunnable
 {
 public:
+
     class Listener
     {
     public:
+        virtual ~Listener() = default;
+
         virtual void tickStart()
         {
         }
@@ -55,11 +56,13 @@ private:
 
 public:
     skTimedCallback(Listener* listener, const SKulong& interrupt);
+
     ~skTimedCallback() override;
 
     void setInterval(const SKulong& interrupt);
 
     void begin();
+
     void end();
 };
 

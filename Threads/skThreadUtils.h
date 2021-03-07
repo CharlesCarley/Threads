@@ -34,8 +34,10 @@ typedef SKuintPtr SKmutexObject;
 
 #define SK_THREAD_NULL ((SKuintPtr)-1)
 #define SK_THREAD_NO_ERROR 0
+#define DO_TRACES
 
-#ifdef DO_TRACES 
+#ifdef DO_TRACES
+#include <cstdio>
 #define tracef(fmt, ...) printf(fmt, __VA_ARGS__)
 #else
 #define tracef(fmt, ...) \

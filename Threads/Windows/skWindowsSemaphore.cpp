@@ -21,9 +21,9 @@
 */
 #include "Threads/Windows/skWindowsSemaphore.h"
 #include <Windows.h>
-#include <stdio.h>
 
-skWindowsSemaphore::skWindowsSemaphore()
+skWindowsSemaphore::skWindowsSemaphore() :
+    m_handle(0)
 {
     initialize();
 }
@@ -44,30 +44,30 @@ void skWindowsSemaphore::initialize()
 
     if (!m_handle)
     {
-        tracef("Failed to create semaphore : %d", GetLastError());
+        tracef("Failed to create semaphore : %lu", GetLastError());
     }
 }
 
-void skWindowsSemaphore::finalize()
+void skWindowsSemaphore::finalize() const
 {
     if (m_handle)
     {
         if (CloseHandle((HANDLE)m_handle) == FALSE)
-            tracef("Failed to close the semaphore handle : %d\n", GetLastError());
+            tracef("Failed to close the semaphore handle : %lu\n", GetLastError());
     }
 }
 
-void skWindowsSemaphore::waitImpl()
+void skWindowsSemaphore::waitImpl() const
 {
     if (m_handle)
     {
-        int res = ::WaitForSingleObject((HANDLE)m_handle, INFINITE);
+        const int res = WaitForSingleObject((HANDLE)m_handle, INFINITE);
         if (res)
-            tracef("WaitForSingleObject returned: %i %d", res, ::GetLastError());
+            tracef("WaitForSingleObject returned: %i %lu", res, GetLastError());
     }
 }
 
-void skWindowsSemaphore::signalImpl()
+void skWindowsSemaphore::signalImpl() const
 {
     if (m_handle)
     {
@@ -77,7 +77,7 @@ void skWindowsSemaphore::signalImpl()
                 nullptr            // lpPreviousCount
                 ) == FALSE)
         {
-            tracef("Failed to release the semaphore handle : %d\n", GetLastError());
+            tracef("Failed to release the semaphore handle : %lu\n", GetLastError());
         }
     }
 }

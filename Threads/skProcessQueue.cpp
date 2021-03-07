@@ -23,7 +23,7 @@
 #include <stdio.h>
 #include "Threads/skMutex.h"
 
-class skProcessQueuePrivate : public skRunable
+class skProcessQueuePrivate : public skRunnable
 {
 public:
     typedef skQueue<skPacket*> PacketQueue;

@@ -25,32 +25,25 @@
 #include "Threads/skThreadUtils.h"
 
 #if SK_PLATFORM == SK_PLATFORM_WIN32
-# include "Windows/skWindowsCriticalSection.h"
+#include "Windows/skWindowsCriticalSection.h"
 #define skPlatformCriticalSection skWindowsCriticalSection
 #else
 #include "Posix/skPosixCriticalSection.h"
 #define skPlatformCriticalSection skPosixCriticalSection
 #endif
 
-
-
-class skCriticalSection : protected skPlatformCriticalSection
+class skCriticalSection final : protected skPlatformCriticalSection
 {
 public:
-    skCriticalSection()
-    {
-    }
+    skCriticalSection()           = default;
+    ~skCriticalSection() override = default;
 
-    ~skCriticalSection() override
-    {
-    }
-
-    void lock(void)
+    void lock()
     {
         lockImpl();
     }
 
-    void unlock(void)
+    void unlock()
     {
         unlockImpl();
     }
@@ -59,25 +52,24 @@ public:
 class skCriticalSectionLock
 {
 private:
-    skCriticalSection* m_crit;
+    skCriticalSection* m_cs;
 
 public:
-    skCriticalSectionLock(skCriticalSection* crit) :
-        m_crit(crit)
+    explicit skCriticalSectionLock(skCriticalSection* cs) :
+        m_cs(cs)
     {
-        if (m_crit)
-            m_crit->lock();
+        if (m_cs)
+            m_cs->lock();
     }
 
     ~skCriticalSectionLock()
     {
-        if (m_crit)
-            m_crit->unlock();
+        if (m_cs)
+            m_cs->unlock();
     }
 };
 
-
-#define SK_SCOPE_LOCK_CRITICAL_SECTION(crit) \
-    skCriticalSectionLock ____scope__lock__(crit)
+#define SK_SCOPE_LOCK_CRITICAL_SECTION(cs) \
+    skCriticalSectionLock ____scope__lock__(cs)
 
 #endif  //_skCriticalSection_h_
