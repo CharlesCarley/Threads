@@ -87,7 +87,7 @@ void skPosixMutex::waitImpl(SKsize milliseconds)
     int status;
     if (m_isInit)
     {
-        struct timespec timed = {0, (__syscall_slong_t)(milliseconds * 1000)};
+        struct timespec timed = {0, (long)(milliseconds * 1000)};
 
         status = pthread_mutex_timedlock((pthread_mutex_t*)&m_mutex, &timed);
         if (status != SK_THREAD_NO_ERROR)

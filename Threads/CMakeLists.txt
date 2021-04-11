@@ -38,7 +38,7 @@ set(Threads_HDR
 )
 
 
-if (WIN32)
+if (WIN32 AND NOT USING_EMSCRIPTEN)
 
     
 	set(Threads_SRC_PLAT_EX 
@@ -118,7 +118,7 @@ endif()
 include_directories(../ ${Utils_INCLUDE})
 
 
-if(MSVC)
+if(MSVC OR USING_EMSCRIPTEN)
     source_group(Source FILES ${Threads_SRC})
     source_group(Header FILES ${Threads_HDR})
     source_group(Source\\Platform FILES ${Threads_SRC_PLAT})
