@@ -62,13 +62,13 @@ void skWindowsThread::startImpl(void)
     );
 }
 
-void skWindowsThread::waitImpl()
+void skWindowsThread::waitImpl() const
 {
     if (m_thread != SK_THREAD_NULL)
         ::WaitForSingleObject((HANDLE)m_thread, INFINITE);
 }
 
-void skWindowsThread::waitImpl(SKsize ms)
+void skWindowsThread::waitImpl(SKsize ms) const
 {
     if (m_thread != SK_THREAD_NULL)
         ::WaitForSingleObject((HANDLE)m_thread, (DWORD)ms);

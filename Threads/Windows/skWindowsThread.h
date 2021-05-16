@@ -36,9 +36,9 @@ protected:
 
     virtual ~skWindowsThread();
 
-    void waitImpl();
+    void waitImpl() const;
 
-    void waitImpl(SKsize ms);
+    void waitImpl(SKsize ms) const;
 
     void startImpl(void);
 

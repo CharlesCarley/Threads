@@ -41,12 +41,12 @@ public:
     ~skThread() override;
 
 
-    void wait()
+    void wait() const
     {
         waitImpl(0);
     }
 
-    void wait(SKsize milliseconds)
+    void wait(SKsize milliseconds) const
     {
         waitImpl(milliseconds);
     }
