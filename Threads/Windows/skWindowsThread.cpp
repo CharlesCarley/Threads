@@ -29,7 +29,7 @@ class Win32ThreadUtils
 public:
     static DWORD WINAPI callback(LPVOID arg)
     {
-        skWindowsThread* thread = reinterpret_cast<skWindowsThread*>(arg);
+        skWindowsThread* thread = static_cast<skWindowsThread*>(arg);
         if (thread)
             return thread->update();
         return 0;
@@ -37,8 +37,8 @@ public:
 };
 
 skWindowsThread::skWindowsThread() :
-    m_id(SK_NPOS),
-    m_thread(SK_THREAD_NULL)
+    m_thread(SK_THREAD_NULL),
+    m_id(SK_NPOS)
 {
 }
 
