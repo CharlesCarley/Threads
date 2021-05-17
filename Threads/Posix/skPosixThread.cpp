@@ -72,7 +72,7 @@ void skPosixThread::startImpl()
     }
 }
 
-void skPosixThread::waitImpl(SKsize milliseconds)
+void skPosixThread::waitImpl(SKsize milliseconds) const
 {
     usleep(milliseconds * 1000);
 }

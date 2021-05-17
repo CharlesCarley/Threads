@@ -36,9 +36,9 @@ protected:
 
     virtual ~skPosixThread();
 
-    void waitImpl();
+    void waitImpl() const;
 
-    void waitImpl(SKsize milliseconds);
+    void waitImpl(SKsize milliseconds)  const;
 
     void startImpl();
 
